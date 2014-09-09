@@ -6,7 +6,10 @@ import beanstalkc
 
 HOST = os.environ.get('HOST', 'localhost')
 PORT = os.environ.get('PORT', 11300)
-TUBES = os.environ.get('TUBES', 'default').split()
+
+bs = beanstalkc.Connection(HOST, PORT)
+
+TUBES = os.environ['TUBES'].split() if 'TUBES' in os.environ else bs.tubes()
 
 def clean_tube(tube):
     return tube.replace('.', '_')
